@@ -1,4 +1,4 @@
-package EngeerInKorea;
+package EngineerInKorea;
 /*
  * 주어진 문자열의 공백을 %20으로 변환하는 함수를 구현하시오.
  * 문자열의 맨끝에는 변환에 필요한 충분한 공백이 있고,

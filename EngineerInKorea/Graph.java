@@ -1,8 +1,8 @@
-package EngeerInKorea;
+package EngineerInKorea;
 
 import java.util.LinkedList;
 
-import EngeerInKorea.Graph.Node;
+import EngineerInKorea.Graph.Node;
 
 public class Graph {
 	

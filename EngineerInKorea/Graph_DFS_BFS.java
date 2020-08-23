@@ -1,4 +1,4 @@
-package EngeerInKorea;
+package EngineerInKorea;
 
 public class Graph_DFS_BFS {
 	public static void main(String[] args) {

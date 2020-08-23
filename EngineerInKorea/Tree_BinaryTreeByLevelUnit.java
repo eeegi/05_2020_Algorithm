@@ -1,4 +1,4 @@
-package EngeerInKorea;
+package EngineerInKorea;
 
 /*
  * 이진트리의 노드들을 각 레벨 별로 LinkedList에 담는 알고리즘을 구현하시오.
