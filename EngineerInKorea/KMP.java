@@ -1,8 +1,9 @@
  package EngineerInKorea;
 /*
  * Knuth-Morris-Pratt 알고리즘
- * prfix, suffix
- * lps : longest proper prefix which is also suffix
+ * prefix, suffix
+ * 부분 일치 테이블 (partial match table) or 실패함수(failure function) or lps
+ * lps : longest proper prefix which is also suffix 
  */
 public class KMP {
 	public static void main(String[] args) {
