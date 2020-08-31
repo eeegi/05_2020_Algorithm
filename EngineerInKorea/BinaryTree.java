@@ -12,6 +12,12 @@ import java.util.LinkedList;
  *  
  *  어떤 노드에 도달히기 위해 거쳐야 하는 간선의 수를 해당 노드의 깊이(depth)라고 하며
  *  가장 깊숙히 있는 노드의 깊이를 해당 트리의 높이(height)라고 합니다.
+ *  
+ *  BST 
+ *  Insert 
+ *  Deletion 1 no child/one child/2 children
+ *  가장 큰값 : 오른쪽 값이 null인 노드
+ *  가장 작은 값 : 왼쪽 갑이 null인 노드
  */
 public class BinaryTree {
 	class Node {
@@ -112,6 +118,73 @@ public class BinaryTree {
 			System.out.println();
 		}
 	}
+
+	public void insert(int data) {
+		root = insert(root, data);
+	}
+	
+	private Node insert(Node root, int data) {
+		if (root == null) {
+			root = new Node(data);
+			return root;
+		}
+		if (data < root.data) {
+			root.left = insert(root.left, data);
+		} else if (data > root.data) {
+			root.right = insert(root.right, data);
+		}
+		return root;
+	}
+	
+	public void delete(int data) {
+		root = delete (root,data);
+	}
+	
+	private Node delete(Node root, int data) {
+		if (root == null) return root;
+		// 삭제 할 데이타를 찾는다
+		if (data < root.data) {
+			root.left = delete (root.left, data);
+		} else if (data > root.data) {
+			root.right = delete(root.right, data);
+		} else {
+			// 삭제할 데이타를 찾았을 경우,
+			// 1 자식이 없는 경우
+			if (root.left == null && root.right == null) {
+				return null;
+				// 2. 자식이 한쪽만 있는 경우, 있는 쪽을 리턴
+			} else if (root.left == null) {
+				return root.right;
+			} else if (root.right == null) {
+				return root.left;
+			}
+			// 3. 자식이 둘다 있는 경우
+			// 작은 값을  root로 넣어주고, 해당 값은 삭제
+			root.data = findMin(root.right);
+			root.right = delete(root.right, root.data);
+		}
+		return root;
+	}
+	
+	private int findMin(Node root) {
+		int min = root.data;
+		while (root.left != null) {
+			min = root.left.data;
+			root = root.left;
+		}
+		return min;
+	}
+	public void inorder() {
+		inorder(root);
+		System.out.println("");
+	}
+	public void inorder(Node node) {
+		if (node != null) {
+			inorder(node.left);
+			System.out.print(node.data + " ");
+			inorder(node.right);
+		}
+	}
 	
 	public static void main(String[] args) {
 		/*
@@ -125,5 +198,23 @@ public class BinaryTree {
 		BinaryTree tree = new BinaryTree();
 		tree.makeTree(a);
 		tree.searchBTree(tree.root, 2);
+		
+		/*
+		 *               4
+		 *           2       6
+		 *        1    3   5    7
+		 *           
+		 */
+		BinaryTree tree1 = new BinaryTree();
+		tree1.insert(4);
+		tree1.insert(2);
+		tree1.insert(1);
+		tree1.insert(3);
+		tree1.insert(6);
+		tree1.insert(5);
+		tree1.insert(7);
+		tree1.inorder();
+		tree1.delete(2);
+		tree1.inorder();
 	}
 }
