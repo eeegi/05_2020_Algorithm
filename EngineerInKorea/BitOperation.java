@@ -22,21 +22,46 @@ package EngineerInKorea;
  */
 
 public class BitOperation {
-	/* 
-	 * 임의의 숫자 num에서 i번째 bit 확인 하는 방법
-	 */
+	// 임의의 숫자 num에서 i번째 bit 확인 하는 방법
 	static boolean getBit (int num, int i) {
 		return (num & (1 << i)) != 0;
 	}
-	/*
-	 * 임의의 숫자 num에서 i번째 bit를 1로 set 
-	 */
+	
+	//  임의의 숫자 num에서 i번째 bit를 1로 set 
 	static int setBit(int num, int i) {
-		return num | (1<<i);
+		return num | (1 << i);
 	}
+	
+	// 임의의 숫자 num에서 i번째 bit를 0로 set 
+	static int clearBit(int num, int i) {
+		return num & ~(1 << i);
+	}
+	
+	// 임의의 숫자 num에서 i번째 왼쪽에 있는 bit를 0으로 만들려면 (i 포함 즉 i도 0으로 만듬)
+	// 1 << 3 : 1000
+	// 0111 = 1000 -1
+	static int clearLeftBit(int num, int i) {
+		return num & ((1 << i) - 1);
+	}
+	
+	// 임의의 숫자 num에서 i번째 오른쪽에 있는 bit를 0으로 만들려면  (i번째 
+	// -1 : 111111...111111
+	// -1 << (3 +1) : 111...110000
+	static int clearRightBits(int num, int i) {
+		return num & (-1 << (i+1));
+	}
+	
+	// 특정 비트를 업데이트
+    // 방법 :  해당 자리수를 0 clear 후 신규 값으로 or 연산
+	static int updateBit(int num, int i, boolean val) {
+		return ((num & ~(1 << i)) | ((val ? 1 : 0) << i)); 
+    }
 	
 	public static void main(String[] args) {
 		System.out.println(getBit(9,3));
 		System.out.println(getBit(5,3));
+		System.out.println(clearLeftBit(169, 3));
+		System.out.println(clearRightBits(169, 3));
+		System.out.println(updateBit(169, 3, false));
 	}
 }
