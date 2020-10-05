@@ -38,6 +38,11 @@ public class Sort_MergeSort {
 			index++;
 		}
 		// 앞쪽 배열만 넣어주면 됨. 200929 Why?
+		// 201006 
+		// 1) 앞쪽 배열(arr[start] ~ arr[mid])이 남아 있는 경우
+		//    앞쪽 배열에 남은 만큼(mid - part1) 돌면서 최종값에 남은 값들을 붙여줌
+		// 2) 뒤쪽 배열이 남을 경우
+		//    뒤쪽 배열은 최종 배열에 이미 자리 잡고 있기 때문에 그냥 나둬도 된다.
 		for (int i = 0; i <= mid - part1; i++) {
 			arr[index + i] = tmp[part1 + i];
 		}
