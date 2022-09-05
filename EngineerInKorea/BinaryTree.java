@@ -12,12 +12,18 @@ import java.util.LinkedList;
  *  
  *  어떤 노드에 도달히기 위해 거쳐야 하는 간선의 수를 해당 노드의 깊이(depth)라고 하며
  *  가장 깊숙히 있는 노드의 깊이를 해당 트리의 높이(height)라고 합니다.
+ * 
  *  
  *  BST 
  *  Insert 
  *  Deletion 1 no child/one child/2 children
  *  가장 큰값 : 오른쪽 값이 null인 노드
- *  가장 작은 값 : 왼쪽 갑이 null인 노드
+ *  가장 작은 값 : 왼쪽 값이 null인 노드
+ 
+ ***  노드 삭제 후 빈 곳에 정하는 방법?
+ *  1) 왼쪽 자식 노드의 가장 큰 값 : 왼쪽 자식을 기준으로 하는 서브 트리에서 최대 값으로 대체하거나
+ *  2) 오른쪽 자식 노드의 가장 작은 값 : 오른쪽 자식의 최소값으로 대체
+ *   여기서는 2)번의 방법으로 대체하여줌.
  */
 public class BinaryTree {
 	class Node {
@@ -58,6 +64,12 @@ public class BinaryTree {
 		node.left = makeTreeR(a, start, mid -1);
 		node.right = makeTreeR(a, mid + 1, end);
 		return node;
+	}
+
+	public Node search(Node root, int key) {
+		if (root == null || root.data == key) return root;
+		if (root.data < key) return search(root.left, key);
+		return search(root.right, key);
 	}
 	
 	public void searchBTree(Node n, int find) {
@@ -124,6 +136,8 @@ public class BinaryTree {
 	}
 	
 	private Node insert(Node root, int data) {
+		// 1.root가 null 일 때
+		// 2. 마지막 노드의 경우
 		if (root == null) {
 			root = new Node(data);
 			return root;
@@ -152,7 +166,7 @@ public class BinaryTree {
 			// 1 자식이 없는 경우
 			if (root.left == null && root.right == null) {
 				return null;
-				// 2. 자식이 한쪽만 있는 경우, 있는 쪽을 리턴
+			// 2. 자식이 한쪽만 있는 경우, 있는 쪽을 리턴
 			} else if (root.left == null) {
 				return root.right;
 			} else if (root.right == null) {
@@ -160,13 +174,16 @@ public class BinaryTree {
 			}
 			// 3. 자식이 둘다 있는 경우
 			// 작은 값을  root로 넣어주고, 해당 값은 삭제
+			// root 오른쪽에 가장 작은 값을 찾아서, root 데이터에 저장
 			root.data = findMin(root.right);
+			// root 오른쪽에 해당 값을 삭제
 			root.right = delete(root.right, root.data);
 		}
 		return root;
 	}
 	
 	private int findMin(Node root) {
+		// 가장 왼쪽에 있는 Node가 가장 작은 값이다.
 		int min = root.data;
 		while (root.left != null) {
 			min = root.left.data;
